@@ -17,4 +17,7 @@ parts:
 apps:
   pi-cpu:
     command: pi-cpu
-
+assumes: [kernel-assets]
+architectures:
+  - build-on: [arm64, arm64]
+    run-on: arm64
