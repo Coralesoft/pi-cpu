@@ -7,3 +7,5 @@
 	  $(RM) ./pi-cpu
 	  $(RM) ./pi-cpu.o
 
+install: 
+	./pi-cpu
