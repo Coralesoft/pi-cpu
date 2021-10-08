@@ -6,5 +6,4 @@
   clean: 
 	  $(RM) ./pi-cpu
 	  $(RM) ./pi-cpu.o
-install: 
-	mv ./pi-cpu /usr/local/bin/
+
