@@ -5,7 +5,7 @@ summary: pi cpu tool to show cpu and temp details # 79 char long summary
 description: |
   This is pi-cpu, a simple optioned tool to show you live information about your Rasberry Pi's Board, Cpu and temperature.
 
-grade: devel # must be 'stable' to release into candidate/stable channels
+grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: classic # use 'strict' once you have the right plugs and slots
 
 parts:
