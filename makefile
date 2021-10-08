@@ -8,4 +8,4 @@
 	  $(RM) ./pi-cpu.o
 
 install: 
-	mv ./pi-cpu /usr/local/bin/
+	mv ./pi-cpu ./bin/
