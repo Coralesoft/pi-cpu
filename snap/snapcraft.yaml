@@ -10,14 +10,18 @@ confinement: classic # use 'strict' once you have the right plugs and slots
 
 parts:
   pi-cpu:
-    plugin: dump
-    source-type: deb
-    source: /home/colin/pi-cpu-1.1-arm64.deb
+    plugin: make
+    source-type: git
+    source: https://github.com/Coraledev/pi-cpu
+    override-pull: snapcraftctl pull
+
+build-packages:
+  - build-essential   
 
 apps:
   pi-cpu:
     command: pi-cpu
 assumes: [kernel-assets]
 architectures:
-  - build-on: [arm64, arm64]
+  - build-on: arm64
     run-on: arm64
