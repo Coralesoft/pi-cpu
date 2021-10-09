@@ -1,12 +1,12 @@
 # build an executable named pi-cpu from main.c
   all: main.c 
-	gcc -O2  -c ./main.c -o picpu.o
-	gcc  -o ./picpu ./picpu.o  -static-libstdc++ -static-libgcc -static -s 
+	gcc -O2  -c ./main.c -o pi-cpu.o
+	gcc  -o ./pi-cpu ./pi-cpu.o  -static-libstdc++ -static-libgcc -static -s 
 
   clean: 
-	  $(RM) ./picpu
-	  $(RM) ./picpu.o
+	  $(RM) ./pi-cpu
+	  $(RM) ./pi-cpu.o
 
 install: 
-	cp ./picpu ./bin/
-	cp ./picpu /usr/local/bin/picpu
+	cp ./pi-cpu ./bin/
+	cp ./pi-cpu /usr/local/bin/pi-cpu
