@@ -5,7 +5,7 @@
 
 void print_usage()
 {
-    printf("Usage: pi-cpu -[vtmh] \n-v verbose mode\n-V show version info\n-t show current CPU temp\n-m show current cpu MHz\n-h show help\n");
+    printf("Usage: pi-cpu -[vtmh] \n-v verbose mode\n-V show version info\n-f show in fahrenheit\n-t show current CPU temp\n-m show current cpu MHz\n-h show help\n");
 }
 
 int main(int argc, char *argv[])
