@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1633341242 source:/home/colin/Documents/dev/pi-cpu/main.c
-	<stdio.h>
-	<stdlib.h>
-	<getopt.h>
-	<unistd.h>
-
