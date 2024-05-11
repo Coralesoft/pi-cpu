@@ -1,3 +1,28 @@
+/*
+# pi-cpu - CPU Information Utility for Raspberry Pi
+# This program:
+#    - Reads the model and frequency information of the CPU.
+#    - Displays the current CPU temperature.
+#    - Provides output in Celsius or Fahrenheit as per user selection.
+#    - Supports verbose mode for detailed output.
+#
+# Usage:
+#    - Run with option flags to display specific information or use help (-h) for usage instructions.
+#
+# To modify or enhance functionality, adapt the source and recompile.
+#
+# Last revised: 11/05/2024
+# version 2024.5.1
+#-----------------------------------------------------------------------
+# Version         Date          Notes:
+# 2021.10.1       10/10/2021    Initial Release - basic functionality.
+# 2024.5.1        11/05/2024    Added error handling and Fahrenheit option and refactored code.
+#
+# Copyright (C) 2012 -2024 by C. Brown
+# Email: dev@coralesoft.nz
+# Released under the MIT License.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
