@@ -14,9 +14,9 @@ void print_usage() {
 }
 
 void print_version() {
-    printf("Version: pi-cpu 1.1\n"
-           "Released: 03 October 2021\n"
-           "Copyright © 2020-2021 C. Brown\n\n");
+    printf("Version: pi-cpu 1.2\n"
+           "Released: 11 May 2024\n"
+           "Copyright © 2020-2024 C. Brown\n\n");
 }
 
 void read_cpu_info(char *model, int *mincpu, int *maxcpu) {
