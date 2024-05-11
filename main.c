@@ -15,10 +15,10 @@
 # version 2024.5.1
 #-----------------------------------------------------------------------
 # Version         Date          Notes:
-# 2021.10.1       10/10/2021    Initial Release - basic functionality.
-# 2024.5.1        11/05/2024    Added error handling and Fahrenheit option and refactored code.
+# 2021.10.1       10.10.2021    Initial Release - basic functionality.
+# 2024.5.1        11.05.2024    Added error handling and Fahrenheit option and refactored code.
 #
-# Copyright (C) 2012 -2024 by C. Brown
+# Copyright (C) 2021 -2024 by C. Brown
 # Email: dev@coralesoft.nz
 # Released under the MIT License.
 */
