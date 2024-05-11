@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <unistd.h>
+#include <string.h>
+
+#define CPU_MODEL_FILE "/proc/device-tree/model"
+#define SCALING_MIN_FREQ_FILE "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"
+#define SCALING_MAX_FREQ_FILE "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
+#define SCALING_CUR_FREQ_FILE "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"
+#define CPU_TEMP_FILE "/sys/class/thermal/thermal_zone0/temp"
 
 void print_usage() {
     printf("Usage: pi-cpu -[vtmhV] \n"
@@ -19,61 +26,58 @@ void print_version() {
            "Copyright © 2020-2024 C. Brown\n\n");
 }
 
+int read_file_as_int(const char *filepath) {
+    FILE *fp;
+    int value = 0;
+
+    fp = fopen(filepath, "r");
+    if (!fp) {
+        fprintf(stderr, "Error: Unable to open file %s. Check if the file exists and has read permissions.\n", filepath);
+        return -1;
+    }
+
+    if (fscanf(fp, "%d", &value) != 1) {
+        fprintf(stderr, "Error: Unable to read an integer value from file %s.\n", filepath);
+        fclose(fp);
+        return -1;
+    }
+
+    fclose(fp);
+    return value;
+}
+
 void read_cpu_info(char *model, int *mincpu, int *maxcpu) {
     FILE *fp;
 
     // Read CPU model
-    fp = fopen("/proc/device-tree/model", "r");
+    fp = fopen(CPU_MODEL_FILE, "r");
     if (fp) {
         fgets(model, 150, fp);
         fclose(fp);
     } else {
         snprintf(model, 150, "Unknown model");
+        fprintf(stderr, "Warning: Unable to read CPU model from %s.\n", CPU_MODEL_FILE);
     }
 
     // Read minimum CPU frequency
-    fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq", "r");
-    if (fp) {
-        fscanf(fp, "%d", mincpu);
-        fclose(fp);
-    } else {
+    *mincpu = read_file_as_int(SCALING_MIN_FREQ_FILE);
+    if (*mincpu == -1) {
         *mincpu = 0;
     }
 
     // Read maximum CPU frequency
-    fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", "r");
-    if (fp) {
-        fscanf(fp, "%d", maxcpu);
-        fclose(fp);
-    } else {
+    *maxcpu = read_file_as_int(SCALING_MAX_FREQ_FILE);
+    if (*maxcpu == -1) {
         *maxcpu = 0;
     }
 }
 
 int read_current_cpu_freq() {
-    FILE *fp;
-    int freq = 0;
-
-    fp = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
-    if (fp) {
-        fscanf(fp, "%d", &freq);
-        fclose(fp);
-    }
-
-    return freq;
+    return read_file_as_int(SCALING_CUR_FREQ_FILE);
 }
 
 int read_cpu_temp() {
-    FILE *fp;
-    int temp = 0;
-
-    fp = fopen("/sys/class/thermal/thermal_zone0/temp", "r");
-    if (fp) {
-        fscanf(fp, "%d", &temp); // In millidegrees Celsius
-        fclose(fp);
-    }
-
-    return temp;
+    return read_file_as_int(CPU_TEMP_FILE);
 }
 
 int main(int argc, char *argv[]) {
@@ -134,17 +138,24 @@ int main(int argc, char *argv[]) {
 
         if (showcurrentMHz || showall) {
             cpuMhz = read_current_cpu_freq();
-            printf("Current CPU MHz: %.2f MHz\n", cpuMhz / 1000.0);
+            if (cpuMhz != -1) {
+                printf("Current CPU MHz: %.2f MHz\n", cpuMhz / 1000.0);
+            } else {
+                printf("Current CPU MHz: Unknown\n");
+            }
         }
 
         if (showtemp || showall) {
             temp = read_cpu_temp();
-            fahrenheit = ((temp / 1000.0) * 1.8) + 32.0; // Celsius to Fahrenheit conversion
-
-            if (showfahrenheit) {
-                printf("Current CPU Temp: %.2f°F\n", fahrenheit);
+            if (temp != -1) {
+                fahrenheit = ((temp / 1000.0) * 1.8) + 32.0; // Celsius to Fahrenheit conversion
+                if (showfahrenheit) {
+                    printf("Current CPU Temp: %.2f°F\n", fahrenheit);
+                } else {
+                    printf("Current CPU Temp: %.2f°C\n", temp / 1000.0);
+                }
             } else {
-                printf("Current CPU Temp: %.2f°C\n", temp / 1000.0);
+                printf("Current CPU Temp: Unknown\n");
             }
         }
     }
