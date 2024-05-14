@@ -24,7 +24,7 @@ sudo apt-get install gcc
 Clone the repository and compile the utility using the provided Makefile:
 
 ```
-git clone https://github.com/yourusername/pi-cpu.git
+git clone https://github.com/Coralesoft/pi-cpu.git
 cd pi-cpu
 make
 ```
